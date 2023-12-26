@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    const [placeCode, setPlaceCode] = useState('')
+    const navigate=useNavigate()
+    const handleChange = (e) => {
+        e.preventDefault()
+        setPlaceCode(e.target.value)
+    }
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        console.log(placeCode)
+        localStorage.setItem('placeCode', placeCode)
+        navigate('/map')
+    }
+    
+  
+
+
+    const [alertShown, setAlertShown] = useState(false);
+        
+        if (!alertShown) {
+        alert("We will be accessing your location to provide you with the best possible experience.");
+        // Set the state to indicate that the alert has been shown
+        setAlertShown(true);
+    }
+  </script>
+        <div>
+        <h1>NavSys</h1>
+        <form onSubmit={handleSubmit}>
+            <input type="text" placeholder="Place Code" onChange={handleChange} value={placeCode}/>
+            <input type="submit" value="Submit" />
+
+        </form>
+    </div>
+</body>
+</html>

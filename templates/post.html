@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post</title>
+</head>
+<body>
+    <div>
+        <h1> <a href="/">NavSys</a> </h1>
+        <form action="{{ url_for('publish_map') }}" method="post">
+            <input type="text" placeholder="Place Code" name="placeCode" value="{{ placeCode }}">
+            <input type="text" placeholder="latitude" name="latitude" value="{{ latitude }}">
+            <input type="text" placeholder="longitude" name="longitude" value="{{ longitude }}">
+            <input type="text" placeholder="link" name="link" value="{{ link }}">
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</body>
+</html>

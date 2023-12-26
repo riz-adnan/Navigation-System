@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>GeoServer GeoTIFF with Red Dot</title>
+    <link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css">
+    <style>
+      .map {
+        height: 800px;
+        width: 100%;
+      }
+      .red-dot {
+        background-color: red;
+        border-radius: 50%;
+        height: 10px;
+        width: 10px;
+      }
+    </style>
+    <script src="https://openlayers.org/en/v4.6.5/build/ol.js"></script>
+  </head>
+  <body>
+    <div id="map" class="map"></div>
+
+    <script>
+      currlat=parseFloat('{{currlatitude}}', 10)
+      currlong=parseFloat('{{currlongitude}}', 10)
+      var layers = [
+        new ol.layer.Tile({
+          source: new ol.source.OSM()
+        }),
+        new ol.layer.Tile({
+          source: new ol.source.TileWMS({
+            url: 'http://localhost:8080/geoserver/navsys/wms',
+            params: {'LAYERS': 'navsys:{{placeCode}}', 'TILED': false},
+            serverType: 'geoserver',
+            transition: 0
+          })
+        }),
+        new ol.layer.Vector({
+          source: new ol.source.Vector({
+            features: [
+              new ol.Feature({
+                geometry: new ol.geom.Point(ol.proj.fromLonLat([currlong, currlat]))
+              })
+            ]
+          }),
+          style: new ol.style.Style({
+            image: new ol.style.Circle({
+              radius: 1,
+              fill: new ol.style.Fill({color: 'red'}),
+              stroke: new ol.style.Stroke({color: 'black', width: 1})
+            })
+          })
+        })
+      ];
+        const longitude=parseFloat('{{longitude}}', 10)
+        const latitude=parseFloat('{{latitude}}', 10 )
+        console.log(longitude,latitude)
+      var map = new ol.Map({
+        layers: layers,
+        target: 'map',
+        view: new ol.View({
+          center: ol.proj.fromLonLat([longitude,latitude]),
+          zoom: 20
+        })
+      });
+
+      // Add a red dot to the map
+      map.addLayer(new ol.layer.Vector({
+        source: new ol.source.Vector({
+          features: [
+            new ol.Feature({
+              geometry: new ol.geom.Point(ol.proj.fromLonLat([currlong, currlat]))
+            })
+          ]
+        }),
+        style: new ol.style.Style({
+          image: new ol.style.Circle({
+            radius: 5,
+            fill: new ol.style.Fill({color: 'red'}),
+            stroke: new ol.style.Stroke({color: 'black', width: 1})
+          })
+        })
+      }));
+    </script>
+  </body>
+</html>

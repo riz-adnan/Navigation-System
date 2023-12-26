@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    <div>
+        <h1>NavSys</h1>
+        <form action="{{ url_for('handle_form') }}" method="post">
+            <input type="text" placeholder="Place Code" name="placeCode" value="{{ placeCode }}">
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</body>
+</html>
